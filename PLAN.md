@@ -14,10 +14,10 @@ Tiempo orientativo total: ~60 min de desarrollo (≈7 min por feature).
 | F2 | Mapa de la ciudad, cámara y jugador a pie | [x] |
 | F3 | Peatones | [x] |
 | F4 | Armas, balas y pickups | [x] |
-| F5 | Coches: tráfico, robar y conducir | [~] |
-| F6 | Nivel de búsqueda y policía | [~] |
-| F7 | HUD, minimapa y pantallas (inicio / Game Over) | [~] |
-| F8 | Sonido, balanceo y pulido final | [~] |
+| F5 | Coches: tráfico, robar y conducir | [x] |
+| F6 | Nivel de búsqueda y policía | [x] |
+| F7 | HUD, minimapa y pantallas (inicio / Game Over) | [x] |
+| F8 | Sonido, balanceo y pulido final | [x] |
 
 ---
 
@@ -104,7 +104,7 @@ Tiempo orientativo total: ~60 min de desarrollo (≈7 min por feature).
 
 ---
 
-## F5 — Coches: tráfico, robar y conducir `[~]`
+## F5 — Coches: tráfico, robar y conducir `[x]`
 
 **Pasos**
 - [x] 5.1 `src/entities/car.js`: rectángulo rotado con color, física simple (aceleración, fricción, giro proporcional a la velocidad, marcha atrás).
@@ -116,14 +116,14 @@ Tiempo orientativo total: ~60 min de desarrollo (≈7 min por feature).
 - [x] 5.7 Docs.
 
 **Criterios de aceptación**
-- [ ] Hay tráfico circulando por las calles sin atravesar edificios. *(tests OK; falta confirmación del usuario)*
-- [ ] Puedo robar un coche con `E`, conducirlo y salir con `E`. *(tests OK; falta confirmación del usuario)*
-- [ ] Los coches no se destruyen; chocan contra edificios. *(tests OK; falta confirmación del usuario)*
-- [ ] Atropellar a velocidad mata peatones. *(tests OK; falta confirmación del usuario)*
+- [x] Hay tráfico circulando por las calles sin atravesar edificios. *(tests OK; confirmado por el usuario)*
+- [x] Puedo robar un coche con `E`, conducirlo y salir con `E`. *(tests OK; confirmado por el usuario)*
+- [x] Los coches no se destruyen; chocan contra edificios. *(tests OK; confirmado por el usuario)*
+- [x] Atropellar a velocidad mata peatones. *(tests OK; confirmado por el usuario)*
 
 ---
 
-## F6 — Nivel de búsqueda y policía `[~]`
+## F6 — Nivel de búsqueda y policía `[x]`
 
 **Pasos**
 - [x] 6.1 `src/wanted.js`: estado de estrellas (0–3), eventos (`pedAttacked`, `pedKilled`, `copKilled`), temporizador de "no visto" → baja estrella. Lógica pura.
@@ -135,15 +135,15 @@ Tiempo orientativo total: ~60 min de desarrollo (≈7 min por feature).
 - [x] 6.7 Docs.
 
 **Criterios de aceptación**
-- [ ] Matar/atacar peatones da estrellas; matar policías sube estrellas hasta 3. *(cubierto por tests; falta confirmación del usuario)*
-- [ ] El número de policías corresponde a la tabla de nivel de búsqueda. *(a pie y coches patrulla cubiertos por tests; falta confirmación del usuario)*
-- [ ] Escondiéndose 10 s de la policía se pierde una estrella. *(cubierto por tests; falta confirmación del usuario)*
-- [ ] La policía puede matar al jugador y se llega a Game Over. *(cubierto por tests; falta confirmación del usuario)*
+- [x] Matar/atacar peatones da estrellas; matar policías sube estrellas hasta 3. *(cubierto por tests; confirmado por el usuario)*
+- [x] El número de policías corresponde a la tabla de nivel de búsqueda. *(a pie y coches patrulla cubiertos por tests; confirmado por el usuario)*
+- [x] Escondiéndose 10 s de la policía se pierde una estrella. *(cubierto por tests; confirmado por el usuario)*
+- [x] La policía puede matar al jugador y se llega a Game Over. *(cubierto por tests; confirmado por el usuario)*
 - [x] Tests de `wanted` en verde.
 
 ---
 
-## F7 — HUD, minimapa y pantallas `[~]`
+## F7 — HUD, minimapa y pantallas `[x]`
 
 **Pasos**
 - [x] 7.1 `src/hud.js`: barra de vida, arma actual + munición, estrellas, puntos y tiempo.
@@ -154,24 +154,24 @@ Tiempo orientativo total: ~60 min de desarrollo (≈7 min por feature).
 - [x] 7.6 Docs.
 
 **Criterios de aceptación**
-- [ ] El HUD muestra siempre la información correcta y actualizada. (falta confirmación del usuario)
-- [ ] El minimapa refleja posiciones reales. (falta confirmación del usuario)
-- [ ] El récord persiste al recargar la página. (falta confirmación del usuario; comprobado en Chrome headless y con tests)
+- [x] El HUD muestra siempre la información correcta y actualizada. (Confirmado por el usuario.)
+- [x] El minimapa refleja posiciones reales. (Confirmado por el usuario.)
+- [x] El récord persiste al recargar la página. (Confirmado por el usuario; comprobado en Chrome headless y con tests)
 - [x] Reiniciar deja la partida en estado inicial (sin restos de la anterior). (test automático; y comprobado en headless tras integrar: 0 ★, sin policías, patrullas ni balas)
 
 ---
 
-## F8 — Sonido, balanceo y pulido final `[~]`
+## F8 — Sonido, balanceo y pulido final `[x]`
 
 **Pasos**
-- [x] 8.1 `src/audio.js`: sonidos sintetizados (puño, pistola, escopeta, pickup, choque, sirena corta, muerte). Se activa tras la primera interacción del usuario. Tecla `M` silencia. *(Objeto global `Sound`; tests con `AudioContext` falso. Falta confirmación del usuario de cómo suenan.)*
-- [x] 8.2 Conectar sonidos a eventos del juego. *(`Sound.attach(game)` en `main.js`, incluidos los eventos reservados de F5/F6. Falta confirmación del usuario.)*
-- [x] 8.3 Feedback visual: destello de disparo, partículas simples de impacto, parpadeo al recibir daño. *(`src/effects.js`; comprobado en captura headless. Falta confirmación del usuario.)*
-- [x] 8.4 Balanceo de `CONFIG` jugando varias partidas. *(Con simulaciones de supervivencia en vez de partidas reales; valores en `docs/config.md`. Falta que el usuario juegue y confirme la dificultad.)*
+- [x] 8.1 `src/audio.js`: sonidos sintetizados (puño, pistola, escopeta, pickup, choque, sirena corta, muerte). Se activa tras la primera interacción del usuario. Tecla `M` silencia. *(Objeto global `Sound`; tests con `AudioContext` falso. Confirmado por el usuario.)*
+- [x] 8.2 Conectar sonidos a eventos del juego. *(`Sound.attach(game)` en `main.js`, incluidos los eventos reservados de F5/F6. Confirmado por el usuario.)*
+- [x] 8.3 Feedback visual: destello de disparo, partículas simples de impacto, parpadeo al recibir daño. *(`src/effects.js`; comprobado en captura headless. Confirmado por el usuario.)*
+- [x] 8.4 Balanceo de `CONFIG` jugando varias partidas. *(Con simulaciones de supervivencia en vez de partidas reales; valores en `docs/config.md`. Dificultad confirmada por el usuario jugando.)*
 - [x] 8.5 Revisión final: sin errores en consola, todos los tests verdes, `docs/` completa, `README.md` de usuario con cómo jugar.
 
 **Criterios de aceptación**
-- [ ] Cada arma y evento principal tiene sonido; `M` silencia. *(Conectado y testeado con un `AudioContext` falso; falta escucharlo el usuario.)*
-- [ ] Una partida típica dura varios minutos y es jugable de principio a fin. *(Falta confirmación del usuario.)*
+- [x] Cada arma y evento principal tiene sonido; `M` silencia. *(Conectado y testeado con un `AudioContext` falso; confirmado por el usuario.)*
+- [x] Una partida típica dura varios minutos y es jugable de principio a fin. *(Confirmado por el usuario.)*
 - [x] Sin errores en consola; `node --test tests/` en verde. *(95/95; partida completa en Chrome headless sin errores de JS.)*
 - [x] Documentación completa y actualizada.
