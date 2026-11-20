@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mini City Chaos</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #111;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas {
+      display: block;
+      background: #000;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="960" height="640"></canvas>
+
+  <!-- Load order matters: each script defines one global used by the next ones. -->
+  <script src="src/config.js"></script>
+  <script src="src/utils.js"></script>
+  <script src="src/input.js"></script>
+  <script src="src/map.js"></script>
+  <script src="src/camera.js"></script>
+  <script src="src/entities/bullet.js"></script>
+  <script src="src/weapons.js"></script>
+  <script src="src/entities/player.js"></script>
+  <script src="src/entities/pedestrian.js"></script>
+  <script src="src/entities/pickup.js"></script>
+  <script src="src/entities/car.js"></script>
+  <script src="src/wanted.js"></script>
+  <script src="src/entities/police.js"></script>
+  <script src="src/hud.js"></script>
+  <script src="src/effects.js"></script>
+  <script src="src/audio.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>

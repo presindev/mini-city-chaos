@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+*.log
+.vscode/
+.idea/
+.claude/worktrees/
+
+# SDD rendered artifacts (markdown is the source of truth)
+specs/**/*.html
+specs/**/feedback.md
+history.html
+
+# SDD onboarding kit (temporary, delete after onboarding)
+sdd-onboarding-kit/
