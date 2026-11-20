@@ -1,0 +1,33 @@
+---
+doc: acceptance-tests
+title: Acceptance tests — {{FEATURE_NAME}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+source_document: {{SOURCE_DOCUMENT}}
+created: {{CREATED_DATE}}
+---
+
+## Summary
+
+<!-- Observable behavior that must hold for acceptance; every requirement gets ≥ 1 test. Never invent behavior — unresolved behavior goes to open-questions.md. -->
+
+- Style: `{{TESTING_STYLE}}` · Command: `{{TEST_COMMAND}}` · Location: `{{TEST_LOCATIONS}}`
+
+## Acceptance tests
+
+<!-- One card per test. IDs: AT-n success, AT-EDGE-n edge, AT-ERR-n error, AT-REG-n non-regression. One sentence per field; say so in the card if a test cannot be automated. -->
+
+::: card
+#### AT1 — {{TEST_TITLE}} [!draft Draft]
+
+- **Requirements:** {{RELATED_REQUIREMENT}}
+- **Given:** {{PRECONDITION}}
+- **When:** {{ACTION}}
+- **Then:** {{EXPECTED_RESULT}}
+:::
+
+## Manual checks
+
+<!-- Optional — delete if every test is automated. -->
+
+- [ ] {{MANUAL_CHECK}}

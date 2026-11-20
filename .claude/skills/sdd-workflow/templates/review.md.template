@@ -1,0 +1,66 @@
+---
+doc: review
+title: Review — {{FEATURE_TITLE}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+reviewer: reviewer
+review_status: pending
+---
+
+## Decision
+
+<!-- One of approved, needs_changes, spec_revision_required, blocked (task-state-machine.md), plus ≤ 2 sentences on what matters. -->
+
+Decision: [!pending TODO] — TODO.
+
+## Traceability
+
+<!-- One row per requirement. Cell verdicts: "!ok Yes", "!warning <concern>", "!blocking <issue>", "!pending TODO". -->
+
+| Requirement | Implemented? | Tested? | Evidence |
+| --- | --- | --- | --- |
+| REQ-001 | !pending TODO | !pending TODO | TODO |
+
+## Commands run
+
+```text
+TODO
+```
+
+## Findings
+
+<!-- One line each: "BLK-n: …" blocking, "NBK-n: …" non-blocking; "None." when empty. Duplicated or padded spec content is a finding. -->
+
+None.
+
+## Scope and high-risk review
+
+<!-- Drift: files changed outside the design's Files to change (or the task's scope globs), each justified — unjustified ones are BLK findings. High-risk: categories touched, escalation rungs run and outputs, or the reason a high-risk change got only the standard review (reference/deep-review-policy.md). -->
+
+- Drift: None.
+- High-risk: None.
+
+## Visual verification
+
+<!-- Optional — delete if the spec has no UI criteria or visual evidence. -->
+
+| Criterion / image | Evidence (what was compared, how) | Result |
+| --- | --- | --- |
+| UI-001 / IMG-001 | TODO | !pending TODO |
+
+## Documentation decision
+
+<!-- `required` (targets listed; documentation_status: pending until the documenter reports) or `not_required`. A task is not done while required documentation is pending. -->
+
+Decision: [!pending TODO]
+
+| Documentation target | Updated / justified unaffected |
+| --- | --- |
+| TODO | TODO |
+
+## Proposals
+
+<!-- Propose-only: nothing here is written anywhere without the developer's approval of the exact text. -->
+
+- **Decision-log entries:** None.
+- **Failure-learning entry:** None.

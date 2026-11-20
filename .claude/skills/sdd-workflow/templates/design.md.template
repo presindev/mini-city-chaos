@@ -1,0 +1,78 @@
+---
+doc: design
+title: Design — {{FEATURE_TITLE}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+status: spec_draft
+---
+
+## Summary
+
+TODO: the chosen approach in ≤ 3 sentences. Reference requirements by ID (REQ-001) — never restate them.
+
+## Data flow
+
+<!-- Optional — delete when the flow is obvious from the summary. -->
+
+::: diagram
+<svg width="560" height="120" viewBox="0 0 560 120" aria-label="Data flow diagram — replace with actual diagram">
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect x="20" y="40" width="120" height="40" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="80" y="65" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1e3a8a">Input</text>
+  <line x1="140" y1="60" x2="218" y2="60" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <rect x="220" y="40" width="120" height="40" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="280" y="65" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#4c1d95">Process</text>
+  <line x1="340" y1="60" x2="418" y2="60" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <rect x="420" y="40" width="120" height="40" rx="6" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="480" y="65" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#14532d">Output</text>
+</svg>
+:::
+
+## Files to change
+
+<!-- Include files that must not change ("Do not change"). Name project-map areas in Reason when a map exists; if the change makes the map stale, add a closing task. -->
+
+| File | Change | Reason |
+| --- | --- | --- |
+| TODO | TODO | REQ-001 |
+
+## Interfaces and data
+
+<!-- Signatures, schemas, CLI contracts and data-model changes — code fences, no narrative. "None." if nothing changes. -->
+
+```text
+TODO: signature / schema / CLI usage
+```
+
+## External dependencies and freshness
+
+<!-- "None." for internal changes. Otherwise one row per dependency: | Dependency | Docs checked (source, date) | Version constraints | Notes / deprecations avoided |. Mandatory for auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code. -->
+
+None.
+
+## Security and permissions
+
+<!-- Trust boundaries, auth/authz, secrets, external input — how each is gated, or "None." High-risk categories trigger reference/deep-review-policy.md (vendored in the harness directory). -->
+
+None.
+
+## Test design
+
+<!-- Tests to add or update, by requirement ID. Add a "UI verification plan:" line (routes, states, viewports; local instances only) only when a browser UI is affected. -->
+
+TODO.
+
+## Documentation targets
+
+None expected.
+
+## Risks and rollback
+
+<!-- One line per risk or rejected alternative; mark decision-log candidates "(decision candidate)". Last line: how to revert or disable. -->
+
+- TODO.
+- Rollback: TODO.

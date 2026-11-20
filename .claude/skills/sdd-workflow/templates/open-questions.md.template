@@ -1,0 +1,32 @@
+---
+doc: open-questions
+title: Open questions — {{FEATURE_NAME}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+source_document: {{SOURCE_DOCUMENT}}
+created: {{CREATED_DATE}}
+---
+
+## Summary
+
+- Blocking: {{BLOCKING_COUNT}} · Non-blocking: {{NON_BLOCKING_COUNT}} · Resolved: {{RESOLVED_COUNT}}
+
+## Open
+
+<!-- One card per question (rules: open-questions-policy.md); blocking ⇒ class blocking-yes + [!blocking Blocking], else [!warning Non-blocking]. A pending blocking question keeps the task out of human_approved. -->
+
+::: card blocking-yes
+#### Q1 — {{QUESTION_TITLE}} [!blocking Blocking]
+
+- **Question:** {{QUESTION_TEXT}}
+- **Why it matters:** {{WHY_IT_MATTERS}}
+- **Default if unanswered:** {{DEFAULT_ASSUMPTION}}
+- **Affected files / sections:** {{AFFECTED_FILE_OR_SECTION}}
+- **Related requirements:** {{RELATED_REQUIREMENT}}
+:::
+
+## Resolved
+
+<!-- Badge [!ok Resolved]; add **Decision:** and **Resolved by:** developer, YYYY-MM-DD; reflect the decision in the affected files. A non-blocking question deferred by the developer goes to a `## Deferred` section (badge [!warning Deferred], temporary behavior recorded). -->
+
+None yet.

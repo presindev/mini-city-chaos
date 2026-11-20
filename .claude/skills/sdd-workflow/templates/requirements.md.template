@@ -1,0 +1,50 @@
+---
+doc: requirements
+title: Requirements — {{FEATURE_TITLE}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+status: spec_draft
+author: spec-author
+human_approval: pending
+---
+
+## Summary
+
+<!-- ≤ 3 sentences: what changes for whom, and why. Shown as "At a glance" on the spec page. -->
+
+{{FEATURE_SUMMARY}}
+
+## Requirements
+
+<!-- Configured requirements format (EARS shown). One sentence per line; NFR lines only when a measurable quality applies. -->
+
+REQ-001: When <trigger>, the system shall <expected response>.
+REQ-002: If <condition>, the system shall <expected response>.
+NFR-001: TODO.
+
+## Edge cases and errors
+
+EDGE-001: TODO.
+ERR-001: TODO.
+
+## Acceptance criteria
+
+<!-- One observable check per line; name the requirement it proves. -->
+
+AC-001: TODO (REQ-001).
+
+## UI acceptance criteria
+
+<!-- Optional — delete if no browser UI is affected. Auth constraints name the account type only; never credentials. -->
+
+| ID | Route | Expected visual state | Interaction flow | Checks (a11y / responsive) |
+| --- | --- | --- | --- | --- |
+| UI-001 | TODO | TODO | TODO | TODO |
+
+## Visual evidence
+
+<!-- Optional — delete if no images are inputs. Testable expectations go to UI acceptance criteria; never transcribe secrets or personal data. -->
+
+| ID | Image | Shows | Provenance | Intent |
+| --- | --- | --- | --- | --- |
+| IMG-001 | TODO | TODO | TODO | design to build / bug evidence / before-after / acceptance criterion |

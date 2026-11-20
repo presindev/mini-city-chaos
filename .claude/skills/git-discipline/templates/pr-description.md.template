@@ -1,0 +1,22 @@
+# {{PR_TITLE}}
+
+## Summary
+
+{{WHAT_CHANGED_AND_WHY}}
+
+## Spec
+
+- Task: `{{TASK_ID}}` — spec: `specs/{{SPEC_SLUG}}/`
+- Requirements covered: {{REQUIREMENT_IDS_OR_SHORT_LIST}}
+
+## Checks run
+
+{{COMMANDS_RUN_FROM_REVIEW_HTML}}
+
+## Review status
+
+{{REVIEW_DECISION_AND_DEFERRED_FINDINGS}}
+
+## Safety notes
+
+{{HIGH_RISK_RECORD_VISUAL_VERIFICATION_FRESHNESS_OR_NONE}}

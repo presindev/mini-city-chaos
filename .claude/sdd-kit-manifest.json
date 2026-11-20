@@ -1,0 +1,389 @@
+{
+  "kit": "sdd-onboarding-kit",
+  "kit_version": "3.2.0",
+  "kit_source": "https://github.com/Sapere-IA/sdd-onboarding-kit.git",
+  "installed_at": "2026-11-20",
+  "updated_at": "2026-11-20",
+  "harness": {
+    "primary": "claude-code",
+    "dir": ".claude",
+    "instruction_files": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "additional": []
+  },
+  "files": [
+    {
+      "installed_path": ".claude/agents/leader.md",
+      "kit_path": "agents/leader.md",
+      "kit_sha256": "21360c288305c30eae8846ce7ba24678cfcb2e9e1ae56d3f2f4db475285c7b13",
+      "installed_sha256": "21360c288305c30eae8846ce7ba24678cfcb2e9e1ae56d3f2f4db475285c7b13",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/agents/spec-author.md",
+      "kit_path": "agents/spec-author.md",
+      "kit_sha256": "0b8a9b901932f0d37ba1519529a81775c3517c7d46acc80319fceefab311de54",
+      "installed_sha256": "b9937804ebbf3504a2ac31937be6cbafcb3c46db8c631df85b037754e8f1a4ed",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/agents/implementer.md",
+      "kit_path": "agents/implementer.md",
+      "kit_sha256": "70fbb8df5a06a941255b19f6efa78c1a30f00dbd1aee9b3a0cdf8acc1ca53c67",
+      "installed_sha256": "70fbb8df5a06a941255b19f6efa78c1a30f00dbd1aee9b3a0cdf8acc1ca53c67",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/agents/reviewer.md",
+      "kit_path": "agents/reviewer.md",
+      "kit_sha256": "d5bf71c20b1b9ae5dbdfacd217e0a31a26b8244673eef4bdaf0e96f386b38aa7",
+      "installed_sha256": "e1e4e99e4b5027b1c7b2ed5722e95131b3caff8c202cf4ad6379da7088adc014",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/agents/documenter.md",
+      "kit_path": "agents/documenter.md",
+      "kit_sha256": "aa304f1a17e5cc5305e83554760d271bf4438ec3d31bbf73ba2cc7038859b192",
+      "installed_sha256": "aa304f1a17e5cc5305e83554760d271bf4438ec3d31bbf73ba2cc7038859b192",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/SKILL.md",
+      "kit_path": "skills/sdd-workflow/SKILL.md",
+      "kit_sha256": "73665b62a3d23f806db17ca1a9cfb47934749ef7a5d93fafcd97a76d9f615811",
+      "installed_sha256": "73665b62a3d23f806db17ca1a9cfb47934749ef7a5d93fafcd97a76d9f615811",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/assumptions-policy.md",
+      "kit_path": "skills/sdd-workflow/assumptions-policy.md",
+      "kit_sha256": "e867dd2ce183dc49d792ec25642b1958dfc78df14172c955ed9f098e403e150f",
+      "installed_sha256": "e867dd2ce183dc49d792ec25642b1958dfc78df14172c955ed9f098e403e150f",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/examples.md",
+      "kit_path": "skills/sdd-workflow/examples.md",
+      "kit_sha256": "32bb72a83a8d5c245d4b2f8b019f1dec19ec095e7c1dc16d9ea6da77112eb6d3",
+      "installed_sha256": "4e748390ea4495e4ded4ede817a772c41b6c57406a85881f1b19039894447f6f",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/intake-from-functional-doc.md",
+      "kit_path": "skills/sdd-workflow/intake-from-functional-doc.md",
+      "kit_sha256": "7f00e779dfdcf92a94b50b92a4f4fa820e8885c7b3cfbb94ac129a6d1d49ae9b",
+      "installed_sha256": "4968ccc6aeafe6682a0ca404a864687ad46adae119db17868a683408720a7f87",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/open-questions-policy.md",
+      "kit_path": "skills/sdd-workflow/open-questions-policy.md",
+      "kit_sha256": "8e017ccb97d5bfdf8fb57ceb11a03ab8531e4b59e08df62afc5b0d12075c3d42",
+      "installed_sha256": "8e017ccb97d5bfdf8fb57ceb11a03ab8531e4b59e08df62afc5b0d12075c3d42",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/review-checklist.md",
+      "kit_path": "skills/sdd-workflow/review-checklist.md",
+      "kit_sha256": "76db4045ee634a1460ad888e7e51b0a74f086dc85d40aea3131e9d8811847b97",
+      "installed_sha256": "4dfcb850b26cd7f6bcb6e503c191287129e4068b1c25477e329512818d60d440",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/spec-format.md",
+      "kit_path": "skills/sdd-workflow/spec-format.md",
+      "kit_sha256": "3e1b6c3761d2e6cb591749e6623629d62565ca14f7b2f68b1159e9e89b6d3262",
+      "installed_sha256": "3e1b6c3761d2e6cb591749e6623629d62565ca14f7b2f68b1159e9e89b6d3262",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/task-state-machine.md",
+      "kit_path": "skills/sdd-workflow/task-state-machine.md",
+      "kit_sha256": "3e96ad0901cc48c2ce18eb02316c394c2eb7d599fbeba7032f8da77da67244bd",
+      "installed_sha256": "3e96ad0901cc48c2ce18eb02316c394c2eb7d599fbeba7032f8da77da67244bd",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/workflow.md",
+      "kit_path": "skills/sdd-workflow/workflow.md",
+      "kit_sha256": "b0641a59fb9f91e8060c0486f7c2fc5e1d2e4e918095feb6dc577f0a57c7bfe6",
+      "installed_sha256": "b0641a59fb9f91e8060c0486f7c2fc5e1d2e4e918095feb6dc577f0a57c7bfe6",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/acceptance-tests.md.template",
+      "kit_path": "templates/specs/acceptance-tests.md.template",
+      "kit_sha256": "9f0120a762b7c413617f7fe6b2dda9e5fe26213c4f13aaec899ffeb2ce072a06",
+      "installed_sha256": "9f0120a762b7c413617f7fe6b2dda9e5fe26213c4f13aaec899ffeb2ce072a06",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/assumptions.md.template",
+      "kit_path": "templates/specs/assumptions.md.template",
+      "kit_sha256": "a8e6145caef0c8cbf6a4661f2ed58415bc2202d74c1c8653df13c0c8334a7812",
+      "installed_sha256": "a8e6145caef0c8cbf6a4661f2ed58415bc2202d74c1c8653df13c0c8334a7812",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/design.md.template",
+      "kit_path": "templates/specs/design.md.template",
+      "kit_sha256": "278771d28bde2bf111d3993b0b322ba6b3f0cff091895a24c549977077038a95",
+      "installed_sha256": "278771d28bde2bf111d3993b0b322ba6b3f0cff091895a24c549977077038a95",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/open-questions.md.template",
+      "kit_path": "templates/specs/open-questions.md.template",
+      "kit_sha256": "b68ff70b9691b55923d33ce78c96758bb8fc9fb1a2d4ace7f18e94ace4148957",
+      "installed_sha256": "b68ff70b9691b55923d33ce78c96758bb8fc9fb1a2d4ace7f18e94ace4148957",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/requirements.md.template",
+      "kit_path": "templates/specs/requirements.md.template",
+      "kit_sha256": "a61edc1855203725a96ae27f9f77477f02a2ed077fec3bc8836c4c505fccd8b8",
+      "installed_sha256": "a61edc1855203725a96ae27f9f77477f02a2ed077fec3bc8836c4c505fccd8b8",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/review.md.template",
+      "kit_path": "templates/specs/review.md.template",
+      "kit_sha256": "5d311bb6c5cc369bb6741c3e0d0ffe720225e655522e51729f0585db1ff9c9af",
+      "installed_sha256": "5d311bb6c5cc369bb6741c3e0d0ffe720225e655522e51729f0585db1ff9c9af",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/spec-shell.html.template",
+      "kit_path": "templates/specs/spec-shell.html.template",
+      "kit_sha256": "f582546ef37a2c194bca1797bdb2f55be2206cc8e3c18240907d12de81f41e03",
+      "installed_sha256": "f582546ef37a2c194bca1797bdb2f55be2206cc8e3c18240907d12de81f41e03",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/spec.css",
+      "kit_path": "templates/specs/spec.css",
+      "kit_sha256": "48552f9160a3bdbb6dc136bfd96b87c1912ae3a8406d389c28bc0014fc6ee965",
+      "installed_sha256": "48552f9160a3bdbb6dc136bfd96b87c1912ae3a8406d389c28bc0014fc6ee965",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/spec.js",
+      "kit_path": "templates/specs/spec.js",
+      "kit_sha256": "617a7c6c2874432ef85d57717e4095a6a33de5dad7ffe79d4e1089e338da86c5",
+      "installed_sha256": "617a7c6c2874432ef85d57717e4095a6a33de5dad7ffe79d4e1089e338da86c5",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-workflow/templates/tasks.md.template",
+      "kit_path": "templates/specs/tasks.md.template",
+      "kit_sha256": "139b2958109224351a49ede50e10c078051575cb0ecf076e683e05ece05384b2",
+      "installed_sha256": "139b2958109224351a49ede50e10c078051575cb0ecf076e683e05ece05384b2",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/sdd-update/SKILL.md",
+      "kit_path": "skills/sdd-update/SKILL.md",
+      "kit_sha256": "9dfd8066a75a6bae7f71cdfa542420cfea55a7301806f7e80002ba2daad8d043",
+      "installed_sha256": "603987f4e9c5f62c457ad6c702a2408a3f1ad4c09c6fd87625544066759be431",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/bro/SKILL.md",
+      "kit_path": "skills/bro/SKILL.md",
+      "kit_sha256": "6504ccbb41613938f55b4892c64851da2fe9ca22478852a684bb63a240fec404",
+      "installed_sha256": "6504ccbb41613938f55b4892c64851da2fe9ca22478852a684bb63a240fec404",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/skills/closing/SKILL.md",
+      "kit_path": "skills/closing/SKILL.md",
+      "kit_sha256": "28aed6db0a239edde263ab2f5b1560a0c75bc47b29fc58b605d3d0d08e625fac",
+      "installed_sha256": "1453c6cae23973a36ccd0926a14be7896c0bcd0938e93afe32ce222f7170f2fb",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/git-discipline/SKILL.md",
+      "kit_path": "skills/optional/git-discipline/SKILL.md",
+      "kit_sha256": "2e487b9b31605a635391cd17892b93b08d734670df9f9ce603310e9fa75dc8ae",
+      "installed_sha256": "c1f3e0913d764432d1a194db58db929114e2011e70ccb0ff166de3b8c27d181f",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/decision-log/SKILL.md",
+      "kit_path": "skills/optional/decision-log/SKILL.md",
+      "kit_sha256": "106be12f1568ad7d9ce9922565d9274e30ae99e61a45ad6b792daef4d5b4e538",
+      "installed_sha256": "c4faea77531fa0ea343f2af78b34446fbb15769755ea1d22498ca264c1ed3bfa",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/git-discipline/templates/commit-message.template",
+      "kit_path": "templates/git/commit-message.template",
+      "kit_sha256": "4047cfbf0f4569a85ecce9005e35c726f72bc2ef9f1c8decfdd201b203c38f01",
+      "installed_sha256": "c6e257659b8b4480364e5a561157b3f2bc137e854a9264f75a253b123567e246",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/git-discipline/templates/pr-description.md.template",
+      "kit_path": "templates/git/pr-description.md.template",
+      "kit_sha256": "c4b0ddfcbdf897df485392da0a952c8910dd0407245be49c0c9bf8195da17278",
+      "installed_sha256": "9de6092edd7167e3ef464ddc48ac33855545aaaa0f52aca55844da3b28bf154a",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/git-discipline/templates/release-note.md.template",
+      "kit_path": "templates/git/release-note.md.template",
+      "kit_sha256": "b371c7209c4d71af865ec480decce6ea17a3d282c3edb964154f616a974b2a79",
+      "installed_sha256": "849d283063b6a017eb0ac1199364f79961003f49743cee0a8ba57f48a0c44ada",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/skills/run-and-verify/SKILL.md",
+      "kit_path": "templates/run-and-verify.md.template",
+      "kit_sha256": "aff3eed911787f9ef86943998f55af8875e271935e32acea70d175f9519e5a1c",
+      "installed_sha256": "f772503cbb6a79a8d652e7618ce3df6ce68a41852a292a7c59cc4f42df7ea217",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/reference/autonomy-policy.md",
+      "kit_path": "reference/autonomy-policy.md",
+      "kit_sha256": "cb708cc02cd202a55389f0b67ff0140348130a26930d4abea7892d2d350ecdd5",
+      "installed_sha256": "cb708cc02cd202a55389f0b67ff0140348130a26930d4abea7892d2d350ecdd5",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/reference/deep-review-policy.md",
+      "kit_path": "reference/deep-review-policy.md",
+      "kit_sha256": "e013b4874d6fcba11a3a0d215844f9afd49e52c04c41595e1771d00446d7ce49",
+      "installed_sha256": "e013b4874d6fcba11a3a0d215844f9afd49e52c04c41595e1771d00446d7ce49",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/reference/memory-policy.md",
+      "kit_path": "reference/memory-policy.md",
+      "kit_sha256": "9bb8f22fb4c0a238b95d794b9fdc88b23968efa47b8ec46e5fb18e4f4ebea453",
+      "installed_sha256": "9bb8f22fb4c0a238b95d794b9fdc88b23968efa47b8ec46e5fb18e4f4ebea453",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/reference/session-recovery.md",
+      "kit_path": "reference/session-recovery.md",
+      "kit_sha256": "b70c7f299111deb4074378b6c081f0eb9c2a52651b014285e72de89c64071993",
+      "installed_sha256": "b70c7f299111deb4074378b6c081f0eb9c2a52651b014285e72de89c64071993",
+      "adapted": false
+    },
+    {
+      "installed_path": ".claude/context/project-map.md",
+      "kit_path": "templates/project-map.md.template",
+      "kit_sha256": "2de365f3bd833e4ee804fb97246d88bcc3bdb481a82bb29413ad8ac65a320fc5",
+      "installed_sha256": "cd81c791a00f38e59402707a792cd46de3d1fd815134536d69e734c5c0075c3c",
+      "adapted": true
+    },
+    {
+      "installed_path": ".claude/hooks/README.md",
+      "kit_path": "templates/.claude/hooks/README.md.template",
+      "kit_sha256": "22c18af72e5f82948db72713c8198115dba20fee99603aef60bfccc9cfca0cfe",
+      "installed_sha256": "e7f7a00ae0a54c8126c42daac0444a1b7ad9c2255af12e56481062b54829b4a4",
+      "adapted": true
+    },
+    {
+      "installed_path": "AGENTS.md",
+      "kit_path": "templates/AGENTS.md.template",
+      "kit_sha256": "8ae3d9738d1dd3e7a5adb0b4fb05b790dca1c97b59919b5db7b212c3c487a2a1",
+      "installed_sha256": "497a5f9335128035a3da6a5c03e7dcb265a3edabb08906474c2ae17bcb9f703b",
+      "adapted": true
+    },
+    {
+      "installed_path": "CLAUDE.md",
+      "kit_path": "templates/CLAUDE.md.template",
+      "kit_sha256": "4cc14b8927c294bca49639dbc9618ce3da53d53bf2a6295fec37322b6a400ad5",
+      "installed_sha256": "4cc14b8927c294bca49639dbc9618ce3da53d53bf2a6295fec37322b6a400ad5",
+      "adapted": false
+    },
+    {
+      "installed_path": "tasks.json",
+      "kit_path": "templates/tasks.json.template",
+      "kit_sha256": "1eaed2c34aaf2f17bf695b299cc5ff343700aa345eb17f455288aaa90c35c439",
+      "installed_sha256": "c81db5996cb84c547bc41eefc8570b44467dcda818c42e8d47f08d77ee2c2d6b",
+      "adapted": true
+    },
+    {
+      "installed_path": "history.md",
+      "kit_path": "templates/history.md.template",
+      "kit_sha256": "fb2d8433ec77db5b63d4d5a0997dbb8860ee0b4cc9224f5df422c4247879430e",
+      "installed_sha256": "249a174049703d6d6a1e8fbfa2bd9792ebf3719868a0735ac6c95bb4d1042a7f",
+      "adapted": true
+    },
+    {
+      "installed_path": "decisions/answers.md",
+      "kit_path": "decisions/answers.template.md",
+      "kit_sha256": "31613005d6f7cc38fdd649643bf8fb4bc95a9982f415168ea1a955d07b89c9a7",
+      "installed_sha256": "9ce004d7159f940e722ebac65f9e4cb4743cb894664a3f23f191c62b6d9cdc33",
+      "adapted": true
+    },
+    {
+      "installed_path": "decisions/architecture-decisions.md",
+      "kit_path": "decisions/architecture-decisions.template.md",
+      "kit_sha256": "ff4e3a3750bf364052c78e433ea23a1f7b53e168da1d12b556f543ad0a3d620e",
+      "installed_sha256": "ff4e3a3750bf364052c78e433ea23a1f7b53e168da1d12b556f543ad0a3d620e",
+      "adapted": false
+    },
+    {
+      "installed_path": "decisions/rejected-options.md",
+      "kit_path": "decisions/rejected-options.template.md",
+      "kit_sha256": "c92e5d116c44a3ac98d4bd2721bbbcdd818eb87dbd4c18ab5e606772d862012b",
+      "installed_sha256": "c92e5d116c44a3ac98d4bd2721bbbcdd818eb87dbd4c18ab5e606772d862012b",
+      "adapted": false
+    },
+    {
+      "installed_path": "decisions/workflow-decisions.md",
+      "kit_path": "decisions/workflow-decisions.template.md",
+      "kit_sha256": "0a756e62586d3c57a30fe281f1eabe8f422e4a8f28ee4dad8f0ff5ad103f8e6c",
+      "installed_sha256": "6b35fd5b2020c95b84e68270a4007084d6e20d460bfb8bf7a880aba8cd6fc3c3",
+      "adapted": true
+    },
+    {
+      "installed_path": "scripts/init.sh",
+      "kit_path": "scripts/init.sh",
+      "kit_sha256": "9788cc1ec69fa738232dc19d56c505865c01d306088d479ee72f7fd8ba35b1f9",
+      "installed_sha256": "9788cc1ec69fa738232dc19d56c505865c01d306088d479ee72f7fd8ba35b1f9",
+      "adapted": false
+    },
+    {
+      "installed_path": "scripts/render-spec.sh",
+      "kit_path": "scripts/render-spec.sh",
+      "kit_sha256": "3af9845ac280bdd8a54f47059afb6dc4dd9e916c693faaae22af74ebe3cc5711",
+      "installed_sha256": "3af9845ac280bdd8a54f47059afb6dc4dd9e916c693faaae22af74ebe3cc5711",
+      "adapted": false
+    },
+    {
+      "installed_path": "scripts/render-spec.ps1",
+      "kit_path": "scripts/render-spec.ps1",
+      "kit_sha256": "49707bdf054b75d7503684ba123541dc2be96b4135babb4d4b4100ccc180fdfd",
+      "installed_sha256": "49707bdf054b75d7503684ba123541dc2be96b4135babb4d4b4100ccc180fdfd",
+      "adapted": false
+    },
+    {
+      "installed_path": "scripts/validate-sdd-structure.sh",
+      "kit_path": "scripts/validate-sdd-structure.sh",
+      "kit_sha256": "1554cf742d43627bf0c8904f17ad9aac5fdcad6827d555ef3c4626d0da510ffb",
+      "installed_sha256": "1554cf742d43627bf0c8904f17ad9aac5fdcad6827d555ef3c4626d0da510ffb",
+      "adapted": false
+    },
+    {
+      "installed_path": "scripts/run-tests.sh",
+      "kit_path": "scripts/run-tests.sh.template",
+      "kit_sha256": "98519dd786b304ee52e69d23dd209608cff941a15b1116fc37cbbcb308a375ec",
+      "installed_sha256": "4aaf14fa9a9310a99792ed644a82ab3ca05ad1a94c6e69fffdbcc1753500c2c2",
+      "adapted": true
+    },
+    {
+      "installed_path": "scripts/run-lint.sh",
+      "kit_path": "scripts/run-lint.sh.template",
+      "kit_sha256": "3d6173ef6ecf57b371c6966dc8c154b26620de83336bc94c54e207285f92afbc",
+      "installed_sha256": "43d5293dba31948d0286cd845295d440f91224fa632e458e27f02ed42276c039",
+      "adapted": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+---
+doc: tasks
+title: Tasks — {{FEATURE_TITLE}}
+task_id: {{TASK_ID}}
+feature_slug: {{FEATURE_SLUG}}
+status: spec_draft
+---
+
+## Tasks
+
+<!-- ≤ ~8 small, verifiable tasks; split the feature otherwise. Format "N. [marker] T<n>: Title — detail". Markers [ ] pending, [x] done, [>] in progress, [!] blocked track subtask progress; the global status lives in tasks.json. Reference IDs; never restate requirements.
+Append only the closing tasks that apply: update docs (design's Documentation targets), update the project map, propose decision-log entries, run UI QA, run the dependency freshness check. -->
+
+1. [ ] T1: Add failing tests for REQ-001 — Before implementing.
+2. [ ] T2: Implement the smallest change for REQ-001 — No scope beyond the approved spec.
+3. [ ] T3: Handle EDGE-001 and ERR-001
+4. [ ] T4: Run validation — Tests, lint and typecheck as configured in AGENTS.md.
