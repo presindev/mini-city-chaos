@@ -5,7 +5,9 @@
 
   const SUBSTEP = 4; // px; small enough not to skip over a 10 px pedestrian
 
-  // Projectile: flies straight, dies on buildings, at max range, or on the first target hit.
+  // Projectile: flies straight, dies on buildings, at max range, or on the first car or
+  // target hit. Car bodies are tested before people, so cars act as cover (also for the
+  // player driving one). Hitting a car damages it through game.damageCar (wrecks: no damage).
   class Bullet {
     constructor(x, y, angle, speed, range, damage, owner) {
       this.x = x;
@@ -30,12 +32,20 @@
       const sx = (this.vx / this.speed) * distance / steps;
       const sy = (this.vy / this.speed) * distance / steps;
       const targets = game.getTargets();
+      const cars = game.cars || [];
       for (let i = 0; i < steps; i++) {
         this.x += sx;
         this.y += sy;
         if (CityMap.isSolid(this.x, this.y)) {
           this.dead = true;
           if (game.emit) game.emit('bulletImpact', { x: this.x, y: this.y, target: null });
+          return;
+        }
+        for (const c of cars) {
+          if (c.distanceTo(this.x, this.y) !== 0) continue;
+          if (game.damageCar) game.damageCar(c, this.damage, this.owner);
+          this.dead = true;
+          if (game.emit) game.emit('bulletImpact', { x: this.x, y: this.y, target: null, car: c });
           return;
         }
         for (const t of targets) {

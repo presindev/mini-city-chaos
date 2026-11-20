@@ -32,7 +32,9 @@
 
   // Car: rotated rectangle with simple arcade physics. Driven by `controls`
   // ({throttle, steer} in -1..1), which are filled by the player, the traffic AI
-  // or a custom `ai(car, dt, game)` hook (police cars in F6). Indestructible.
+  // or a custom `ai(car, dt, game)` hook (police cars in F6).
+  // Life cycle (MCC-001): intact -> burning (health 0, BURN_TIME s) -> wreck (WRECK_TIME s).
+  // Damage, explosions and their score/wanted effects go through Game.damageCar/explodeCar.
   // For collisions the body is approximated by a capsule (3 circles along its length).
   class Car {
     constructor(x, y, angle = 0, color = CAR.COLORS[0]) {
@@ -54,6 +56,16 @@
       this.blockedTimer = 0;
       this.idleTime = 0; // seconds (almost) stopped while driven by the traffic AI
       this.remove = false; // the game drops it from game.cars when true
+      this.health = CAR.HEALTH;
+      this.burnTimer = 0; // > 0: burning, explodes when it reaches 0
+      this.wreck = false; // burnt-out, immobile, driverless
+      this.wreckTimer = 0; // seconds until a wreck is removed
+      this.byPlayer = false; // last damage came from the player (score/wanted attribution)
+      this.noReward = false; // caught fire while the player drove it: never rewards
+    }
+
+    isBurning() {
+      return this.burnTimer > 0 && !this.wreck;
     }
 
     get radius() {
@@ -98,6 +110,19 @@
     }
 
     update(dt, game) {
+      if (this.wreck) {
+        this.speed = 0;
+        this.wreckTimer -= dt;
+        if (this.wreckTimer <= 0) this.remove = true;
+        return;
+      }
+      if (this.burnTimer > 0) {
+        this.burnTimer = Math.max(0, this.burnTimer - dt);
+        if (this.burnTimer === 0 && game && game.explodeCar) {
+          game.explodeCar(this);
+          return;
+        }
+      }
       this.crashCooldown = Math.max(0, this.crashCooldown - dt);
       if (this.driver === 'ai') {
         if (this.ai) this.ai(this, dt, game);
@@ -175,11 +200,17 @@
       this.crash(before - Math.abs(this.speed), game);
     }
 
-    // Emits carCrash when an impact loses enough speed (with a short cooldown).
-    crash(impact, game) {
-      if (impact < CAR.CRASH_SPEED || this.crashCooldown > 0) return;
+    // Emits carCrash when an impact loses enough speed (with a short cooldown) and
+    // loses impact * CRASH_DAMAGE_FACTOR health. `other` is the car hit (null = wall);
+    // the damage is the player's if the player drove either car. Wrecks ignore crashes.
+    crash(impact, game, other = null) {
+      if (this.wreck || impact < CAR.CRASH_SPEED || this.crashCooldown > 0) return;
       this.crashCooldown = CAR.CRASH_COOLDOWN;
       if (game && game.emit) game.emit('carCrash', { car: this, speed: impact });
+      if (game && game.damageCar) {
+        const byPlayer = this.driver === 'player' || (other && other.driver === 'player');
+        game.damageCar(this, impact * CAR.CRASH_DAMAGE_FACTOR, byPlayer ? game.player : other);
+      }
     }
 
     // Player's car above RUN_OVER_SPEED kills every target it touches.
@@ -428,6 +459,7 @@
         for (let b = a + 1; b < cars.length; b++) {
           const A = cars[a];
           const B = cars[b];
+          if (A.wreck && B.wreck) continue;
           if (Math.abs(A.x - B.x) > CAR.WIDTH || Math.abs(A.y - B.y) > CAR.WIDTH) continue;
           // Deepest overlapping pair of capsule circles.
           let best = null;
@@ -450,14 +482,17 @@
             nx = -nx;
             ny = -ny;
           }
+          // Wrecks are never pushed: the other car takes the whole separation.
           const half = best.overlap / 2 + 0.01;
-          if (!Car.hitsSolid(A.x - nx * half, A.y - ny * half, A.angle)) {
-            A.x -= nx * half;
-            A.y -= ny * half;
+          const pushA = A.wreck ? 0 : B.wreck ? half * 2 : half;
+          const pushB = B.wreck ? 0 : A.wreck ? half * 2 : half;
+          if (pushA > 0 && !Car.hitsSolid(A.x - nx * pushA, A.y - ny * pushA, A.angle)) {
+            A.x -= nx * pushA;
+            A.y -= ny * pushA;
           }
-          if (!Car.hitsSolid(B.x + nx * half, B.y + ny * half, B.angle)) {
-            B.x += nx * half;
-            B.y += ny * half;
+          if (pushB > 0 && !Car.hitsSolid(B.x + nx * pushB, B.y + ny * pushB, B.angle)) {
+            B.x += nx * pushB;
+            B.y += ny * pushB;
           }
           const vax = Math.cos(A.angle) * A.speed;
           const vay = Math.sin(A.angle) * A.speed;
@@ -466,8 +501,8 @@
           const impact = Math.hypot(vax - vbx, vay - vby);
           A.speed *= CAR.CAR_HIT_DAMPING;
           B.speed *= CAR.CAR_HIT_DAMPING;
-          A.crash(impact, game);
-          B.crash(impact, game);
+          A.crash(impact, game, B);
+          B.crash(impact, game, A);
         }
       }
     }
@@ -485,7 +520,8 @@
       }
       for (const c of game.cars) {
         const offScreen = !game.isOnScreen(c.x, c.y, CAR.WIDTH * 2);
-        if (offScreen && c.driver === null) c.remove = true; // parked/abandoned (also stolen patrol cars)
+        // Parked/abandoned (also stolen patrol cars and wrecks); burning cars explode first.
+        if (offScreen && c.driver === null && !c.isBurning()) c.remove = true;
         if (offScreen && Car.isTraffic(c) && c.idleTime > CAR.STUCK_REMOVE_TIME) c.remove = true;
       }
       game.cars = game.cars.filter((c) => !c.remove);
@@ -502,6 +538,21 @@
       // Shadow.
       ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
       ctx.fillRect(-w / 2 + 3, -h / 2 + 3, w, h);
+      if (this.wreck) {
+        // Charred shell: dark body, empty window frames, no lights.
+        ctx.fillStyle = '#2a2622';
+        ctx.strokeStyle = '#111';
+        ctx.lineWidth = 2;
+        ctx.fillRect(-w / 2, -h / 2, w, h);
+        ctx.strokeRect(-w / 2, -h / 2, w, h);
+        ctx.fillStyle = '#141210';
+        ctx.fillRect(w * 0.12, -h / 2 + 3, w * 0.16, h - 6);
+        ctx.fillRect(-w * 0.36, -h / 2 + 4, w * 0.1, h - 8);
+        ctx.fillStyle = '#4a3a30';
+        ctx.fillRect(-w * 0.15, -h / 2 + 4, w * 0.2, h - 8);
+        ctx.restore();
+        return;
+      }
       // Body.
       ctx.fillStyle = this.isPolice ? '#f4f4f4' : this.color;
       ctx.strokeStyle = '#111';

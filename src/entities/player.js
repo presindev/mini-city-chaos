@@ -81,12 +81,12 @@
     }
 
     // Enters the closest car whose body is within ENTER_DISTANCE; an AI driver
-    // gets out and runs away. Returns the car or null.
+    // gets out and runs away. Burning cars and wrecks cannot be entered. Returns the car or null.
     enterNearestCar(game) {
       let best = null;
       let bestDist = CONFIG.CAR.ENTER_DISTANCE;
       for (const car of game.cars || []) {
-        if (car.driver === 'player') continue;
+        if (car.driver === 'player' || car.wreck || (car.isBurning && car.isBurning())) continue;
         const d = car.distanceTo(this.x, this.y);
         if (d <= bestDist) {
           best = car;
@@ -120,6 +120,20 @@
       this.y = spot.y;
       if (game.emit) game.emit('carExit', { car });
       return true;
+    }
+
+    // Thrown out of the car when it explodes: first free spot beside it, or its centre.
+    // No carExit event (the explosion is the event).
+    forceExit(game) {
+      const car = this.inCar;
+      if (!car) return;
+      const spot = car.freeSpotBeside(this.radius, game) || { x: car.x, y: car.y };
+      car.driver = null;
+      car.controls.throttle = 0;
+      car.controls.steer = 0;
+      this.inCar = null;
+      this.x = spot.x;
+      this.y = spot.y;
     }
 
     // Applies damage (halved by CAR.PLAYER_DAMAGE_FACTOR while driving) and returns the

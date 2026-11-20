@@ -4,18 +4,20 @@
   const CONFIG = root.CONFIG || (typeof require !== 'undefined' ? require('./config.js') : null);
 
   // Short-lived visual effects stored in game.effects. Every effect has
-  // {kind, x, y, time}; this module adds the 'particle' kind (sparks, blood) and
+  // {kind, x, y, time}; this module adds the 'particle' kind (sparks, blood, smoke, fire) and
   // updates/draws all kinds. Creation and update are pure (no DOM) and tested.
   const Effects = {
     // Burst of `count` particles from (x, y) with random direction and speed up to `speed`.
-    // If `angle` is given, they spray in a half-circle around it. Keeps the number of
-    // particles under MAX_PARTICLES by dropping the oldest ones.
-    burst(effects, x, y, { count, speed, colors, angle = null, size = 2 }, rng = Math.random) {
+    // If `angle` is given, they spray in a half-circle around it. `time` is the particle
+    // lifetime (default PARTICLE_TIME). Keeps the number of particles under MAX_PARTICLES
+    // by dropping the oldest ones.
+    burst(effects, x, y, { count, speed, colors, angle = null, size = 2, time = null }, rng = Math.random) {
       const cfg = CONFIG.EFFECTS;
+      const baseLife = time === null ? cfg.PARTICLE_TIME : time;
       for (let i = 0; i < count; i++) {
         const a = angle === null ? rng() * Math.PI * 2 : angle + (rng() - 0.5) * Math.PI;
         const v = speed * (0.3 + 0.7 * rng());
-        const life = cfg.PARTICLE_TIME * (0.6 + 0.4 * rng());
+        const life = baseLife * (0.6 + 0.4 * rng());
         effects.push({
           kind: 'particle',
           x,
@@ -48,6 +50,38 @@
       const cfg = CONFIG.EFFECTS;
       return Effects.burst(effects, who.x, who.y,
         { count: cfg.BLOOD_COUNT, speed: cfg.BLOOD_SPEED, colors: cfg.BLOOD_COLORS, size: 3 }, rng);
+    },
+
+    // Number of particles to emit this frame for `rate` per second (fraction -> chance).
+    countFor(rate, dt, rng = Math.random) {
+      const n = rate * dt;
+      return Math.floor(n) + (rng() < n % 1 ? 1 : 0);
+    },
+
+    // Grey smoke from a damaged car ({x, y}); `dt` scales the amount (SMOKE_RATE per second).
+    smoke(effects, car, dt, rng = Math.random) {
+      const cfg = CONFIG.EFFECTS;
+      const count = Effects.countFor(cfg.SMOKE_RATE, dt, rng);
+      if (count === 0) return effects;
+      return Effects.burst(effects, car.x, car.y,
+        { count, speed: cfg.SMOKE_SPEED, colors: cfg.SMOKE_COLORS, size: 7, time: cfg.SMOKE_TIME }, rng);
+    },
+
+    // Flames from a burning car ({x, y}); FIRE_RATE particles per second.
+    fire(effects, car, dt, rng = Math.random) {
+      const cfg = CONFIG.EFFECTS;
+      const count = Effects.countFor(cfg.FIRE_RATE, dt, rng);
+      if (count === 0) return effects;
+      return Effects.burst(effects, car.x, car.y,
+        { count, speed: cfg.FIRE_SPEED, colors: cfg.FIRE_COLORS, size: 5, time: cfg.FIRE_TIME }, rng);
+    },
+
+    // Car explosion at (x, y): one big burst of fire and smoke.
+    explosion(effects, x, y, rng = Math.random) {
+      const cfg = CONFIG.EFFECTS;
+      return Effects.burst(effects, x, y,
+        { count: cfg.EXPLOSION_COUNT, speed: cfg.EXPLOSION_SPEED, colors: cfg.EXPLOSION_COLORS, size: 6,
+          time: cfg.EXPLOSION_TIME }, rng);
     },
 
     // Removes the oldest particles (front of the array) beyond MAX_PARTICLES in place.

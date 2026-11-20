@@ -31,6 +31,9 @@
       this.on('bulletImpact', (d) => Effects.impact(this.effects, d));
       this.on('pedAttacked', (d) => Effects.blood(this.effects, d.ped));
       this.on('playerHurt', () => { this.player.hurtTimer = CONFIG.EFFECTS.HURT_FLASH_TIME; });
+      // Car damage (MCC-001): flames on ignition, blast on explosion.
+      this.on('carBurning', (d) => Effects.fire(this.effects, d.car, 0.25));
+      this.on('carExploded', (d) => Effects.explosion(this.effects, d.x, d.y));
     }
 
     // Tiny event bus so systems (wanted level, audio, HUD...) can react to game events
@@ -113,6 +116,78 @@
       }
     }
 
+    // Damages a car (bullets, crashes, explosions). `attacker` === player marks the car as
+    // destroyed by the player (REQ-016). Wrecks ignore damage; a burning car keeps its timer
+    // and its attribution. At 0 health the car catches fire: civilian AI drivers flee,
+    // patrol cars keep driving, and if the player drives it, it never rewards.
+    damageCar(car, amount, attacker) {
+      if (!car || car.wreck || car.isBurning() || !(amount > 0)) return;
+      car.health = Math.max(0, car.health - amount);
+      car.byPlayer = !!attacker && attacker === this.player;
+      if (car.health > 0) return;
+      car.burnTimer = CONFIG.CAR.BURN_TIME;
+      car.noReward = car.driver === 'player';
+      if (car.driver === 'ai' && !car.isPolice) {
+        car.ejectDriver(this);
+        car.driver = null;
+      }
+      this.emit('carBurning', { car });
+    }
+
+    // Blows up a car: area damage with linear falloff to people, the player and other
+    // cars within EXPLOSION_RADIUS (chains: they get their own BURN_TIME), score/wanted
+    // if the player is responsible, and leaves a wreck. A player still inside is thrown
+    // out and takes the full (unhalved) damage.
+    explodeCar(car) {
+      if (car.wreck) return;
+      const C = CONFIG.CAR;
+      const byPlayer = car.byPlayer && !car.noReward;
+      const attacker = byPlayer ? this.player : car;
+      const x = car.x;
+      const y = car.y;
+      const R = C.EXPLOSION_RADIUS;
+      const falloff = (d) => C.EXPLOSION_DAMAGE * (1 - d / R);
+      car.burnTimer = 0;
+      car.wreck = true;
+      car.wreckTimer = C.WRECK_TIME;
+      car.speed = 0;
+      car.controls.throttle = 0;
+      car.controls.steer = 0;
+
+      const p = this.player;
+      if (p.inCar === car) {
+        p.forceExit(this);
+        this.damagePlayer(C.EXPLOSION_DAMAGE);
+      } else {
+        const d = Math.hypot(p.x - x, p.y - y);
+        if (d < R) this.damagePlayer(falloff(d));
+      }
+      car.driver = null;
+
+      for (const t of this.pedestrians.concat(this.police)) {
+        if (t.dead) continue;
+        const d = Math.hypot(t.x - x, t.y - y);
+        if (d < R) this.damageTarget(t, falloff(d), x, y, attacker);
+      }
+      for (const o of this.cars) {
+        if (o === car || o.wreck) continue;
+        const d = o.distanceTo(x, y);
+        if (d < R) this.damageCar(o, falloff(d), attacker);
+      }
+
+      if (byPlayer) {
+        if (car.isPolice) {
+          this.score += CONFIG.SCORE.PATROL_CAR;
+          this.wanted.copKilled();
+        } else {
+          this.score += CONFIG.SCORE.CAR;
+          this.wanted.pedAttacked();
+        }
+      }
+      this.scareAt(x, y, CONFIG.SCARE_RADIUS);
+      this.emit('carExploded', { car, x, y, byPlayer });
+    }
+
     // True if any active cop can see the player (radius only, walls ignored).
     isPlayerSeen() {
       const p = this.player;
@@ -167,7 +242,7 @@
       const want = CONFIG.WANTED.PATROL_CARS[this.wanted.stars];
       const active = this.patrolCars();
       for (let i = want; i < active.length; i++) active[i].leaving = true;
-      this.cars = this.cars.filter((c) => !(c.isPolice && c.leaving && c.driver === 'ai' &&
+      this.cars = this.cars.filter((c) => !(c.isPolice && c.leaving && c.driver === 'ai' && !c.isBurning() &&
         !this.isOnScreen(c.x, c.y, CONFIG.CAR.WIDTH)));
 
       let missing = want - Math.min(active.length, want);
@@ -279,11 +354,21 @@
           for (const k of this.pickups) {
             if (k.update(dt, this.player.inCar ? null : this.player)) this.emit('pickup', { weapon: k.weapon, x: k.x, y: k.y });
           }
+          this.emitCarSmoke(dt);
           this.effects = Effects.update(this.effects, dt);
           break;
         case 'paused':
           if (input.wasPressed('KeyP')) this.state = 'playing';
           break;
+      }
+    }
+
+    // Per-frame smoke (damaged cars and wrecks) and flames (burning cars), on screen only.
+    emitCarSmoke(dt) {
+      for (const c of this.cars) {
+        if (!this.isOnScreen(c.x, c.y, CONFIG.CAR.WIDTH)) continue;
+        if (c.isBurning()) Effects.fire(this.effects, c, dt);
+        else if (c.health <= CONFIG.CAR.SMOKE_HEALTH) Effects.smoke(this.effects, c, dt);
       }
     }
 

@@ -99,7 +99,19 @@
       BLOOD_SPEED: 90,
       BLOOD_COLORS: ['#b01818', '#d02828', '#801010'],
       HURT_FLASH_TIME: 0.4, // player blinks red after taking damage
-      HURT_BLINK_RATE: 16 // blinks per second while hurt
+      HURT_BLINK_RATE: 16, // blinks per second while hurt
+      SMOKE_RATE: 6, // smoke particles per second from a damaged car (on screen)
+      SMOKE_SPEED: 25,
+      SMOKE_TIME: 1.2, // smoke particle lifetime
+      SMOKE_COLORS: ['#555', '#666', '#777', '#444'],
+      FIRE_RATE: 18, // fire particles per second from a burning car (on screen)
+      FIRE_SPEED: 50,
+      FIRE_TIME: 0.5,
+      FIRE_COLORS: ['#ffd040', '#ff9020', '#ff5010', '#e02010'],
+      EXPLOSION_COUNT: 40, // particles per car explosion
+      EXPLOSION_SPEED: 280,
+      EXPLOSION_TIME: 0.7,
+      EXPLOSION_COLORS: ['#fff2a0', '#ffd040', '#ff9020', '#ff5010', '#555', '#333']
     },
 
     AUDIO: {
@@ -139,6 +151,14 @@
       STUCK_REMOVE_TIME: 8, // stuck traffic out of view is removed (and respawned)
       RUN_OVER_SPEED: 120,
       PLAYER_DAMAGE_FACTOR: 0.5,
+      // Damage and explosions (MCC-001)
+      HEALTH: 100,
+      SMOKE_HEALTH: 50, // smokes at or below this health
+      BURN_TIME: 3, // seconds burning at 0 health before exploding
+      EXPLOSION_RADIUS: 110,
+      EXPLOSION_DAMAGE: 80, // at the centre; falls off linearly to 0 at the radius
+      CRASH_DAMAGE_FACTOR: 0.1, // health lost per px/s of speed lost in a carCrash
+      WRECK_TIME: 15, // seconds a burnt wreck stays
       COLORS: ['#d33', '#36c', '#eb3', '#3a3', '#e80', '#a3c', '#ddd', '#555']
     },
 
@@ -196,6 +216,8 @@
     SCORE: {
       PEDESTRIAN: 10,
       POLICE: 50,
+      CAR: 20, // civilian car destroyed by the player
+      PATROL_CAR: 100, // patrol car destroyed by the player
       PER_SECOND: 1
     },
 

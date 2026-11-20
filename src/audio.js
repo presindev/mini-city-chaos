@@ -204,6 +204,15 @@
       s.tone(t, { type: 'square', freq: 300, freqEnd: 60, dur: 0.4, vol: 0.35 * v });
       s.noise(t, { dur: 0.1, vol: 0.3 * v, freq: 800 });
     },
+    carBurning(s, t, v) {
+      // Fuel catching fire: a rising whoosh.
+      s.noise(t, { dur: 0.5, vol: 0.6 * v, filter: 'bandpass', freq: 300, freqEnd: 1400, q: 0.7, attack: 0.08 });
+    },
+    carExploded(s, t, v) {
+      s.noise(t, { dur: 0.8, vol: 1.0 * v, freq: 1800, freqEnd: 80, attack: 0.003 });
+      s.tone(t, { type: 'sine', freq: 90, freqEnd: 30, dur: 0.6, vol: 0.9 * v });
+      s.tone(t, { type: 'sawtooth', freq: 60, freqEnd: 25, dur: 0.4, vol: 0.4 * v });
+    },
     gameOver(s, t, v) {
       const notes = [392, 330, 262, 196];
       notes.forEach((f, i) => {
@@ -230,6 +239,8 @@
       Sound.play('crash', v);
     },
     runOver() { Sound.play('runOver'); },
+    carBurning(d) { Sound.play('carBurning', 1, d.car || null); },
+    carExploded(d) { Sound.play('carExploded', 1, d.car || null); },
     wantedChanged(d) { if (d.stars > (d.prev || 0)) Sound.play('siren'); },
     copKilled() { Sound.play('copDeath'); },
     copShot(d) { Sound.play('copShot', 1, d.cop || null); },

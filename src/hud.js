@@ -75,15 +75,18 @@
       Hud.drawMinimap(ctx, game);
     },
 
-    // Top-left panel: health bar, current weapon + ammo, weapon slots.
+    // Top-left panel: health bar, car health bar (only while driving), current weapon +
+    // ammo, weapon slots.
     drawStatus(ctx, game) {
       const m = H.MARGIN;
       const p = game.player;
       const inv = p.inventory;
       const def = CONFIG.WEAPONS[inv.current];
+      const car = p.inCar;
+      const carH = car ? 20 : 0; // extra height for the car bar
 
       ctx.fillStyle = H.PANEL;
-      ctx.fillRect(m, m, 250, 92);
+      ctx.fillRect(m, m, 250, 92 + carH);
 
       // Health bar
       const ratio = Math.max(0, Math.min(1, p.health / CONFIG.PLAYER.MAX_HEALTH));
@@ -107,21 +110,22 @@
       ctx.strokeStyle = 'rgba(0,0,0,0.8)';
       ctx.strokeText(hpText, bx + bw / 2, by + bh / 2 + 1);
       ctx.fillText(hpText, bx + bw / 2, by + bh / 2 + 1);
+      if (car) Hud.drawCarBar(ctx, car, game, bx, by + bh + 4, bw);
 
       // Current weapon + ammo
       const ammo = def.INFINITE_AMMO ? '∞' : String(inv.ammo[inv.current]);
       ctx.textAlign = 'left';
       ctx.textBaseline = 'top';
       ctx.font = 'bold 18px sans-serif';
-      ctx.fillText(def.NAME, bx, by + 24);
+      ctx.fillText(def.NAME, bx, by + 24 + carH);
       ctx.textAlign = 'right';
-      ctx.fillText(ammo, bx + bw, by + 24);
+      ctx.fillText(ammo, bx + bw, by + 24 + carH);
 
       // Weapon slots: owned ones bright, current one highlighted.
       const slotW = (bw - 8) / 3;
       Weapons.ORDER.forEach((k, i) => {
         const sx = bx + i * (slotW + 4);
-        const sy = by + 50;
+        const sy = by + 50 + carH;
         const owned = inv.owned[k];
         ctx.fillStyle = k === inv.current ? H.ACCENT : owned ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.05)';
         ctx.fillRect(sx, sy, slotW, 18);
@@ -137,8 +141,37 @@
         ctx.font = 'bold 12px sans-serif';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('EN COCHE (E: salir)', m, m + 98);
+        ctx.fillText('EN COCHE (E: salir)', m, m + 98 + carH);
       }
+    },
+
+    // Car health bar under the player's one; blinks red while the car burns.
+    drawCarBar(ctx, car, game, x, y, w) {
+      const h = 12;
+      const ratio = Math.max(0, Math.min(1, car.health / CONFIG.CAR.HEALTH));
+      const burning = car.isBurning && car.isBurning();
+      ctx.fillStyle = '#222';
+      ctx.fillRect(x, y, w, h);
+      if (burning) {
+        const on = Math.floor((game.time || 0) * CONFIG.EFFECTS.HURT_BLINK_RATE / 2) % 2 === 0;
+        ctx.fillStyle = on ? '#f22' : '#600';
+        ctx.fillRect(x, y, w, h);
+      } else {
+        ctx.fillStyle = ratio * CONFIG.CAR.HEALTH > CONFIG.CAR.SMOKE_HEALTH ? '#39f' : '#e83';
+        ctx.fillRect(x, y, w * ratio, h);
+      }
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+      const text = burning ? '¡COCHE EN LLAMAS!' : 'COCHE ' + Math.ceil(car.health);
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+      ctx.strokeText(text, x + w / 2, y + h / 2 + 1);
+      ctx.fillStyle = '#fff';
+      ctx.fillText(text, x + w / 2, y + h / 2 + 1);
     },
 
     // Top-right: wanted stars, score and time survived.
@@ -240,7 +273,7 @@
 
       // Patrol cars and foot cops
       for (const car of game.cars || []) {
-        if (!car.isPolice) continue;
+        if (!car.isPolice || car.wreck) continue; // MCC-001: wrecks are not patrols
         const q = toMap(car.x, car.y);
         ctx.fillStyle = H.MINIMAP_COLORS.PATROL;
         ctx.fillRect(q.x - 3, q.y - 3, 6, 6);
