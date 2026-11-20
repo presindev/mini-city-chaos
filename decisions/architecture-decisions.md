@@ -28,4 +28,11 @@ Entry format:
 
 ---
 
-No entries yet.
+## 2026-11-20 — Vanilla JS globals, no dependencies, no build
+
+- Status: accepted
+- Context: recorded at SDD onboarding to capture the existing architecture, which was established during F0–F8.
+- Decision: HTML5 Canvas + vanilla JavaScript, loaded by `index.html` in dependency order. Each `src/` file defines one global plus a guarded `module.exports` for the Node tests (`node:test`). Systems communicate through `game.on`/`game.emit`. Tunables live in `CONFIG` (`src/config.js`).
+- Alternatives rejected: adding tooling or dependencies (see `rejected-options.md`, 2026-11-20).
+- Consequences: new modules follow the same pattern and need a `<script>` tag in `index.html` (protected) and a `docs/<module>.md` page. Introducing a bundler or packages requires an approved spec.
+- Source: SDD onboarding; `docs/README.md`; `PLAN.md` F1.

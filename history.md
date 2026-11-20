@@ -3,6 +3,19 @@ doc: history
 title: SDD History
 ---
 
+## Resume here
+
+- **Updated:** 2026-11-20
+- **Current task:** none. The SDD harness was just installed. `tasks.json` holds only the `TEMPLATE-001` example (`pending`).
+- **Next action:** when the developer brings the next idea, run `/sdd-workflow <feature description>`. That replaces `TEMPLATE-001` with `MCC-001`, writes the spec, renders it and stops for approval.
+- **Blockers / waiting on:** the developer still has to define the post-F0–F8 roadmap.
+- **Uncommitted work:** none.
+- **Notes:**
+  - Game F0–F8 is complete; `node --test tests/` passes 95/95.
+  - SDD artifacts are in English; the game docs (`README.md`, `PLAN.md`, `docs/`) stay in Spanish.
+  - `sdd-onboarding-kit/` is a gitignored clone that can be deleted.
+  - Onboarding answers are in `decisions/answers.md`.
+
 ## Entries
 
 <!-- Append a new entry each time a task reaches done — newest first, immediately after the INSERT-ENTRY-HERE marker. Remove the "No entries yet." line when adding the first entry. Entry format:

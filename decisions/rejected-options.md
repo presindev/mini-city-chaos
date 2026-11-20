@@ -27,4 +27,16 @@ Entry format:
 
 ---
 
-No entries yet.
+## 2026-11-20 — Adding ESLint/Prettier (package.json + dependencies)
+
+- Rejected in favor of: keeping the project dependency-free. Tests run with `node --test tests/`; there is no lint, typecheck or format step, and `scripts/run-lint.sh` no-ops.
+- Reason: it would break the "no dependencies, no install, no build" philosophy of the game.
+- Revisit when: the codebase grows enough that lint/format errors become a recurring review finding.
+- Source: SDD onboarding conversation (commands question).
+
+## 2026-11-20 — Playwright browser-tester subagent
+
+- Rejected in favor of: Node tests plus the manual in-browser checklist in the `run-and-verify` skill.
+- Reason: not needed for now; the developer verifies the UI by playing the game.
+- Revisit when: UI regressions slip past manual checks, or automated visual verification becomes valuable.
+- Source: SDD onboarding conversation (questions.md §18).
