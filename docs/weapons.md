@@ -17,7 +17,8 @@ Un **inventario** es un objeto plano: `{ owned: {FISTS, PISTOL, SHOTGUN}, ammo: 
 
 ### `Bullet` (clase)
 - `new Bullet(x, y, angle, speed, range, damage, owner)`; `update(dt, game)`, `draw(ctx, camera)` (estela corta amarilla); `dead`.
-- Avanza en sub-pasos de 4 px: muere al tocar un edificio, al recorrer su alcance o al impactar al primer objetivo (nunca a su `owner`).
+- Avanza en sub-pasos de 4 px: muere al tocar un edificio, al recorrer su alcance, al tocar la carrocería de un coche o al impactar al primer objetivo (nunca a su `owner`).
+- Coches (MCC-001): en cada sub-paso se comprueban los coches de `game.cars` **antes** que las personas, así que los coches sirven de cobertura (también para el jugador que conduce). La bala se para en la carrocería, llama a `game.damageCar(car, damage, owner)` (la chatarra no recibe daño) y emite `bulletImpact {x, y, target: null, car}`. Si `game.cars` no existe (stubs de los tests) funciona como antes.
 
 ### `Pickup` (clase)
 - `new Pickup(x, y, weapon)` con `weapon` = `'PISTOL'` o `'SHOTGUN'`; `update(dt, player) → boolean` (true si se recoge en este frame); `draw(ctx, camera)` (círculo azul "P" o naranja "E").
@@ -28,6 +29,7 @@ Un **inventario** es un objeto plano: `{ owned: {FISTS, PISTOL, SHOTGUN}, ammo: 
 - Se dispara manteniendo el clic (`Input.mouse.down`); la cadencia limita el ritmo.
 - Los perdigones se reparten uniformemente en el abanico de 30°. A 100 px quedan separados ~13 px, así que a media distancia solo suele acertar uno (posible ajuste en F8).
 - Las balas que dañan a un peatón lo hacen huir en la dirección de la bala.
+- Los puños no dañan coches (MCC-001).
 
 ## Tests
-`tests/weapons.test.js`: inventario inicial y selección, munición con tope y `cycle`, cadencia y munición, abanico de la escopeta, alcance/arco de los puños, balas (primer objetivo, ignora al dueño, alcance exacto, paran en edificios), pickup y reaparición, pickups en aceras.
+`tests/weapons.test.js`: inventario inicial y selección, munición con tope y `cycle`, cadencia y munición, abanico de la escopeta, alcance/arco de los puños, balas (primer objetivo, ignora al dueño, alcance exacto, paran en edificios), pickup y reaparición, pickups en aceras. Las balas contra coches (y que los puños no los dañan) están en `tests/car-damage.test.js`.

@@ -11,9 +11,10 @@
 
 ### Dibujo (solo usan `ctx`)
 - `Hud.draw(ctx, game)`: HUD de la partida = `drawStatus` + `drawScore` + `drawMinimap`. Lo llama `game.drawWorld` al final.
-- `Hud.drawStatus(ctx, game)`: panel arriba a la izquierda: barra de vida (verde/amarilla/roja según el %), arma actual + munición (`∞` para los puños), casillas `1 Puños · 2 Pistola · 3 Escopeta` (resaltada la actual, apagadas las que no se tienen). Si `player.inCar` existe, muestra "EN COCHE (E: salir)".
+- `Hud.drawStatus(ctx, game)`: panel arriba a la izquierda: barra de vida (verde/amarilla/roja según el %), arma actual + munición (`∞` para los puños), casillas `1 Puños · 2 Pistola · 3 Escopeta` (resaltada la actual, apagadas las que no se tienen). Si `player.inCar` existe, muestra debajo de la vida la barra de vida del coche (`drawCarBar`; el panel crece 20 px y el resto de filas baja) y "EN COCHE (E: salir)".
+- `Hud.drawCarBar(ctx, car, game, x, y, w)` (MCC-001): barra de 12 px con el texto "COCHE <vida>"; azul por encima de `CAR.SMOKE_HEALTH` y naranja por debajo. Mientras el coche arde, parpadea en rojo con "¡COCHE EN LLAMAS!".
 - `Hud.drawScore(ctx, game)`: arriba a la derecha: estrellas de búsqueda (`game.wanted ? game.wanted.stars : 0`, de `CONFIG.WANTED.MAX_STARS`), puntos y tiempo sobrevivido.
-- `Hud.drawMinimap(ctx, game)`: abajo a la derecha (`HUD.MINIMAP_SIZE` px): ciudad, rectángulo de la vista de la cámara, coches patrulla (`(game.cars || []).filter(c => c.isPolice)`, cuadrados azules), policías a pie vivos (`game.police || []`, puntos azules) y jugador (punto amarillo; usa la posición de `player.inCar` si conduce).
+- `Hud.drawMinimap(ctx, game)`: abajo a la derecha (`HUD.MINIMAP_SIZE` px): ciudad, rectángulo de la vista de la cámara, coches patrulla (`isPolice` y que no sean chatarra, cuadrados azules; MCC-001: la chatarra de un patrulla no se dibuja), policías a pie vivos (`game.police || []`, puntos azules) y jugador (punto amarillo; usa la posición de `player.inCar` si conduce).
 - `Hud.getMinimapCanvas()`: pre-renderiza la ciudad una sola vez en un canvas fuera de pantalla (1 tile = 4 px). Devuelve `null` si no hay `document` (Node).
 - `Hud.drawMenu(ctx, game)`: título, lema, lista de controles, "Pulsa Enter para empezar" (parpadea) y `game.highscore`.
 - `Hud.drawPause(ctx, game)`: oscurece el mundo, panel con "PAUSA" y los controles.
@@ -27,4 +28,4 @@
 - El mapa del minimapa es estático (el trazado es determinista), por eso se dibuja una sola vez.
 
 ## Tests
-`tests/hud.test.js`: `formatTime`, carga/guardado del récord con almacenamiento falso, almacenamiento que lanza excepciones, y que en Node no hay almacenamiento por defecto ni canvas de minimapa. La integración con `Game` (puntos por segundo, récord, reinicio limpio) está en `tests/game.test.js`. El dibujo se prueba a mano.
+`tests/hud.test.js`: `formatTime`, carga/guardado del récord con almacenamiento falso, almacenamiento que lanza excepciones, y que en Node no hay almacenamiento por defecto ni canvas de minimapa. La integración con `Game` (puntos por segundo, récord, reinicio limpio) está en `tests/game.test.js`. El dibujo (incluida la barra del coche de MCC-001) se prueba a mano; que el minimapa no dibuje la chatarra de los patrullas se prueba en `tests/car-damage.test.js`.

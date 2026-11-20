@@ -28,6 +28,33 @@ Entry format:
 
 ---
 
+## 2026-11-20 — Car damage, score and wanted go through Game
+
+- Status: accepted
+- Context: MCC-001 made cars destructible; damage, attribution, score and wanted level needed a single owner.
+- Decision: all car damage and explosions go through `Game.damageCar` and `Game.explodeCar`; `Car` only holds state (health, burning, wreck) and emits nothing about rewards.
+- Alternatives rejected: `Car.takeDamage` emitting events and applying rewards itself (see `rejected-options.md`, 2026-11-20).
+- Consequences: new damage sources (weapons, hazards) must call `Game.damageCar`; score/wanted rules for cars live only in `game.js`.
+- Source: MCC-001 `specs/car-damage-explosions/` (design, review).
+
+## 2026-11-20 — Cars are cover for all bullets
+
+- Status: accepted
+- Context: MCC-001 Q2 — bullets used to pass through cars.
+- Decision: every bullet (player and police) stops on any car body and damages the car; wrecks stop bullets without taking damage. While driving, police bullets hit the car, not the player.
+- Alternatives rejected: only player bullets hit cars; bullets damage both car and driver.
+- Consequences: a driving player is only hurt by rams, crashes and explosions until the car burns; `CAR.PLAYER_DAMAGE_FACTOR` now mainly affects rams and nearby explosions.
+- Source: MCC-001 open-questions Q2 (developer, 2026-11-20).
+
+## 2026-11-20 — Car kill credit: last damage source, frozen at ignition
+
+- Status: accepted
+- Context: MCC-001 needed to decide who earns points/stars when a car explodes, including chain reactions.
+- Decision: a car credits its last damage source; credit freezes when it starts burning; a car the player was driving when it ignited never rewards. Explosion kills are applied before the car reward.
+- Alternatives rejected: last hit before the explosion; car reward before kills (would give 2★ instead of 1★ in mixed cases).
+- Consequences: chain explosions inherit the player's credit; finishing a police-damaged car gives full reward.
+- Source: MCC-001 assumptions A2, A13, A14 (developer, 2026-11-20).
+
 ## 2026-11-20 — Vanilla JS globals, no dependencies, no build
 
 - Status: accepted

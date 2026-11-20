@@ -27,6 +27,13 @@ Entry format:
 
 ---
 
+## 2026-11-20 — Car.takeDamage emitting events and applying rewards
+
+- Rejected in favor of: `Game.damageCar`/`Game.explodeCar` (architecture-decisions.md, 2026-11-20).
+- Reason: it would spread score/wanted logic across entities and make `Car` depend on game state.
+- Revisit when: unlikely.
+- Source: MCC-001 design / review.
+
 ## 2026-11-20 — Adding ESLint/Prettier (package.json + dependencies)
 
 - Rejected in favor of: keeping the project dependency-free. Tests run with `node --test tests/`; there is no lint, typecheck or format step, and `scripts/run-lint.sh` no-ops.

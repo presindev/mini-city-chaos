@@ -22,6 +22,8 @@ Se llama `Sound` y no `Audio` para no tapar el constructor nativo `Audio` del na
 | `carEnter` / `carExit` | `carDoor` (portazo) |
 | `carCrash` `{speed}` | `crash`, volumen proporcional a `speed / CAR.MAX_SPEED` (mín. 0,3) |
 | `runOver` | `runOver` (golpe grave) |
+| `carBurning` `{car}` | `carBurning` (ráfaga de ruido ascendente, el fuego prende; *dedupe* por `car`; MCC-001) |
+| `carExploded` `{car}` | `carExploded` (estallido de ruido + tonos graves descendentes; *dedupe* por `car`; MCC-001) |
 | `wantedChanged` `{stars, prev}` | `siren` (dos tonos, dos veces) **solo si sube** |
 | `copKilled` | `copDeath` |
 | `copShot` `{cop}` | `copShot` (con *dedupe* por `cop`, por si también llega un `shot` del mismo policía) |
@@ -30,7 +32,11 @@ Se llama `Sound` y no `Audio` para no tapar el constructor nativo `Audio` del na
 
 ### `Effects` (objeto)
 Todos los efectos de `game.effects` tienen `{kind, x, y, time}` (coordenadas de mundo, `time` = vida restante). Tipos: `swing` (puños, lo crea `Weapons.punch`), `flash` (destello, lo crea `Weapons.fire`) y `particle` (`{vx, vy, maxTime, size, color}`).
-- `burst(effects, x, y, {count, speed, colors, angle?, size?}, rng?)`: añade partículas en direcciones aleatorias y aplica el límite.
+- `burst(effects, x, y, {count, speed, colors, angle?, size?, time?}, rng?)`: añade partículas en direcciones aleatorias y aplica el límite. `time` (opcional, MCC-001) es la vida de las partículas; por defecto `PARTICLE_TIME`.
+- `countFor(rate, dt, rng?)` (MCC-001): cuántas partículas emitir este frame para `rate` por segundo (la fracción se convierte en probabilidad).
+- `smoke(effects, car, dt, rng?)` (MCC-001): humo gris de un coche dañado (`SMOKE_RATE`/s, `SMOKE_SPEED`, `SMOKE_TIME`, `SMOKE_COLORS`, tamaño 7).
+- `fire(effects, car, dt, rng?)` (MCC-001): llamas de un coche que arde (`FIRE_RATE`/s, `FIRE_SPEED`, `FIRE_TIME`, `FIRE_COLORS`, tamaño 5).
+- `explosion(effects, x, y, rng?)` (MCC-001): una ráfaga de `EXPLOSION_COUNT` partículas de fuego y humo (`EXPLOSION_SPEED`, `EXPLOSION_TIME`, `EXPLOSION_COLORS`, tamaño 6).
 - `impact(effects, {x, y, target}, rng?)`: chispas grises/amarillas si `target` es `null` (edificio); rojas si hay `target`.
 - `blood(effects, {x, y}, rng?)`: salpicadura de sangre.
 - `cap(effects)`: si hay más de `MAX_PARTICLES` partículas, quita las más antiguas (no toca `swing`/`flash`).
@@ -40,7 +46,7 @@ Todos los efectos de `game.effects` tienen `{kind, x, y, time}` (coordenadas de 
 
 ## Integración
 - **`main.js`**: `Sound.attach(game)`; `keydown`/`mousedown` en `window` llaman a `Sound.unlock()`; cada frame, `Input.wasPressed('KeyM')` → `Sound.toggleMute()`; si está en silencio dibuja la etiqueta "SILENCIO (M)" abajo en el centro. El audio no está en `Game` para que los tests de Node no dependan de él.
-- **`game.js`**: en el constructor se suscribe a `bulletImpact` → `Effects.impact`, `pedAttacked` → `Effects.blood` y `playerHurt` → `player.hurtTimer = EFFECTS.HURT_FLASH_TIME`. `update` usa `Effects.update`; `drawEffects` dibuja `flash` y `particle` con `Effects`.
+- **`game.js`**: en el constructor se suscribe a `bulletImpact` → `Effects.impact`, `pedAttacked` → `Effects.blood` y `playerHurt` → `player.hurtTimer = EFFECTS.HURT_FLASH_TIME`; desde MCC-001 también `carBurning` → `Effects.fire` y `carExploded` → `Effects.explosion`. `update` llama a `emitCarSmoke` (humo/llamas de los coches en pantalla) y a `Effects.update`; `drawEffects` dibuja `flash` y `particle` con `Effects`.
 - **`player.js`**: `hurtTimer` (0 al crear, baja en `update`); mientras sea > 0 el cuerpo parpadea en rojo (`HURT_BLINK_RATE` veces/s).
 
 ## Detalles / decisiones
@@ -51,5 +57,6 @@ Todos los efectos de `game.effects` tienen `{kind, x, y, time}` (coordenadas de 
 
 ## Tests
 - `tests/audio.test.js`: *no-op* sin `AudioContext`; todas las recetas suenan con un `AudioContext` falso; `unlock` crea un único contexto y lo reanuda; silencio (nada suena y ganancia 0); límite de repeticiones; *dedupe* por emisor; `attach` se suscribe a los 14 eventos, los mapea al sonido correcto (sirena solo al subir) y sobrevive a `reset()`.
+- `tests/car-damage.test.js` (MCC-001): humo, llamas y explosiones se mantienen dentro de `MAX_PARTICLES`.
 - `tests/effects.test.js`: impactos/sangre crean el número y color de partículas configurados; las partículas se mueven, frenan y desaparecen; límite de partículas; `Game` convierte `bulletImpact`/`pedAttacked`/`playerHurt` en partículas y parpadeo, y el temporizador baja a 0.
 - Sonido y aspecto: prueba manual.
